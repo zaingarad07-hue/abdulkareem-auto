@@ -1,0 +1,283 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Dark Luxury Automotive Theme */
+    --background: 228 43% 3%;
+    --foreground: 234 67% 97%;
+    --card: 228 30% 6%;
+    --card-foreground: 234 67% 97%;
+    --popover: 228 30% 6%;
+    --popover-foreground: 234 67% 97%;
+    --primary: 199 100% 60%;
+    --primary-foreground: 228 43% 3%;
+    --secondary: 228 20% 10%;
+    --secondary-foreground: 234 67% 97%;
+    --muted: 228 20% 12%;
+    --muted-foreground: 230 10% 68%;
+    --accent: 199 100% 60%;
+    --accent-foreground: 228 43% 3%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 228 15% 16%;
+    --input: 228 15% 16%;
+    --ring: 199 100% 60%;
+    --radius: 1.125rem;
+
+    /* Custom Colors */
+    --cyan: #35B8FF;
+    --cyan-glow: rgba(53, 184, 255, 0.35);
+    --cyan-glow-intense: rgba(53, 184, 255, 0.6);
+    --dark-bg: #05060B;
+    --dark-bg-secondary: #0B0E1A;
+    --text-primary: #F4F6FF;
+    --text-secondary: #A7A9B5;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-[#05060B] text-[#F4F6FF] antialiased;
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* Typography */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Orbitron', sans-serif;
+    letter-spacing: 0.04em;
+  }
+
+  .font-display {
+    font-family: 'Orbitron', sans-serif;
+  }
+
+  .font-mono-label {
+    font-family: 'IBM Plex Mono', monospace;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-size: 0.7rem;
+    font-weight: 500;
+  }
+
+  .font-arabic {
+    font-family: 'Tajawal', sans-serif;
+  }
+}
+
+@layer components {
+  /* Neon Glow Effects */
+  .neon-glow {
+    box-shadow: 0 0 20px rgba(53, 184, 255, 0.3),
+                0 0 40px rgba(53, 184, 255, 0.2),
+                0 0 60px rgba(53, 184, 255, 0.1);
+  }
+
+  .neon-glow-intense {
+    box-shadow: 0 0 30px rgba(53, 184, 255, 0.5),
+                0 0 60px rgba(53, 184, 255, 0.3),
+                0 0 90px rgba(53, 184, 255, 0.15);
+  }
+
+  .neon-border {
+    border: 1px solid rgba(53, 184, 255, 0.4);
+    box-shadow: 0 0 15px rgba(53, 184, 255, 0.15),
+                inset 0 0 15px rgba(53, 184, 255, 0.05);
+  }
+
+  .neon-text-glow {
+    text-shadow: 0 0 10px rgba(53, 184, 255, 0.6),
+                 0 0 20px rgba(53, 184, 255, 0.4),
+                 0 0 40px rgba(53, 184, 255, 0.2);
+  }
+
+  /* Scanline Overlay */
+  .scanlines {
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(53, 184, 255, 0.03) 2px,
+      rgba(53, 184, 255, 0.03) 4px
+    );
+    pointer-events: none;
+  }
+
+  /* Gradient Overlays */
+  .gradient-bottom {
+    background: linear-gradient(180deg, transparent 0%, rgba(5, 6, 11, 0.85) 100%);
+  }
+
+  .gradient-card {
+    background: linear-gradient(180deg, transparent 30%, rgba(5, 6, 11, 0.78) 100%);
+  }
+
+  /* Glass Card */
+  .glass-card {
+    background: rgba(5, 6, 11, 0.55);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(244, 246, 255, 0.12);
+  }
+
+  /* WhatsApp Glow Button */
+  .whatsapp-glow {
+    animation: whatsappPulse 2s ease-in-out infinite;
+  }
+
+  /* Button Styles */
+  .btn-primary {
+    @apply px-8 py-4 rounded-full font-display text-sm tracking-wider uppercase;
+    background: linear-gradient(135deg, #35B8FF 0%, #1a8fcc 100%);
+    color: #05060B;
+    font-weight: 700;
+    transition: all 0.3s ease;
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 30px rgba(53, 184, 255, 0.4),
+                0 0 60px rgba(53, 184, 255, 0.2);
+  }
+
+  .btn-outline {
+    @apply px-8 py-4 rounded-full font-display text-sm tracking-wider uppercase;
+    background: transparent;
+    border: 1px solid rgba(53, 184, 255, 0.5);
+    color: #35B8FF;
+    font-weight: 600;
+    transition: all 0.3s ease;
+  }
+
+  .btn-outline:hover {
+    background: rgba(53, 184, 255, 0.1);
+    border-color: rgba(53, 184, 255, 0.8);
+    box-shadow: 0 0 20px rgba(53, 184, 255, 0.2);
+  }
+
+  /* Chip Style */
+  .chip {
+    @apply px-4 py-2 rounded-full font-mono-label;
+    background: rgba(5, 6, 11, 0.55);
+    border: 1px solid rgba(244, 246, 255, 0.12);
+    color: var(--text-secondary);
+    transition: all 0.3s ease;
+  }
+
+  .chip:hover {
+    border-color: rgba(53, 184, 255, 0.4);
+    color: var(--text-primary);
+  }
+}
+
+@layer utilities {
+  /* Custom Animations */
+  @keyframes whatsappPulse {
+    0%, 100% {
+      box-shadow: 0 0 20px rgba(37, 211, 102, 0.3),
+                  0 0 40px rgba(37, 211, 102, 0.15);
+    }
+    50% {
+      box-shadow: 0 0 30px rgba(37, 211, 102, 0.5),
+                  0 0 60px rgba(37, 211, 102, 0.25),
+                  0 0 90px rgba(37, 211, 102, 0.1);
+    }
+  }
+
+  @keyframes neonFlicker {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.85; }
+  }
+
+  @keyframes scanlineDrift {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(4px); }
+  }
+
+  @keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+
+  @keyframes glowPulse {
+    0%, 100% {
+      box-shadow: 0 0 20px rgba(53, 184, 255, 0.3),
+                  0 0 40px rgba(53, 184, 255, 0.15);
+    }
+    50% {
+      box-shadow: 0 0 30px rgba(53, 184, 255, 0.5),
+                  0 0 60px rgba(53, 184, 255, 0.25);
+    }
+  }
+
+  .animate-whatsapp-pulse {
+    animation: whatsappPulse 2s ease-in-out infinite;
+  }
+
+  .animate-neon-flicker {
+    animation: neonFlicker 3s ease-in-out infinite;
+  }
+
+  .animate-scanline-drift {
+    animation: scanlineDrift 8s linear infinite;
+  }
+
+  .animate-shimmer {
+    background: linear-gradient(90deg, transparent, rgba(53, 184, 255, 0.15), transparent);
+    background-size: 200% 100%;
+    animation: shimmer 3s ease-in-out infinite;
+  }
+
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .animate-glow-pulse {
+    animation: glowPulse 2.5s ease-in-out infinite;
+  }
+}
+
+/* Noise Texture Overlay */
+.noise-overlay::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  opacity: 0.04;
+  pointer-events: none;
+  z-index: 50;
+  mix-blend-mode: overlay;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #05060B;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(53, 184, 255, 0.3);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(53, 184, 255, 0.5);
+}
