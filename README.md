@@ -69,3 +69,24 @@ git push -u origin main
 | `public/videos/*.mp4`       | فيديوهات العرض |
 
 لتبديل أي صورة: ضع ملفاً بنفس الاسم في نفس المجلد.
+
+---
+
+## 🎬 فيديو ترويجي (Remotion)
+
+فيديو ترويجي بدقة 1080p (12 ثانية) مبني بـ [Remotion](https://remotion.dev)،
+بنفس هوية الموقع (خط Orbitron + توهّج سماوي + خلفية داكنة). الكود في
+`src/remotion/` والتركيبة المسجّلة اسمها `PromoVideo`.
+
+```bash
+npm run video          # يفتح Remotion Studio للمعاينة والتعديل الحيّ
+npm run video:render   # يصدّر الفيديو إلى out/promo-video.mp4
+npm run video:still    # يصدّر صورة ثابتة (poster) إلى out/promo-poster.png
+npm run video:fonts    # يعيد توليد الخطوط المضمّنة (عند تغييرها)
+```
+
+> الخطوط (Orbitron + Tajawal) مضمّنة كـ base64 داخل `src/remotion/font-faces.ts`
+> حتى يعمل التصدير بدون إنترنت. بيانات العمل (الهاتف، إنستغرام، الموقع) في
+> `src/remotion/constants.ts`.
+
+> أول تشغيل لـ `video:render` يحمّل Chrome Headless Shell تلقائياً.
