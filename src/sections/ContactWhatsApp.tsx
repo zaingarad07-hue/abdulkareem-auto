@@ -230,13 +230,13 @@ export default function ContactWhatsApp() {
                     <Sparkles className="w-8 h-8 text-cyan" />
                   </div>
                   <h4 className="font-display text-xl font-bold text-text-primary mb-2">
-                    Message Sent!
+                    WhatsApp Opened
                   </h4>
                   <p className="text-text-secondary">
-                    We'll get back to you within 24 hours.
+                    Continue the conversation on WhatsApp to confirm your booking.
                   </p>
                   <p className="font-arabic text-text-secondary/70 text-sm mt-1">
-                    سنعود إليك خلال 24 ساعة.
+                    أكمل المحادثة على واتساب لتأكيد الحجز.
                   </p>
                 </motion.div>
               ) : (

@@ -53,7 +53,7 @@ export default function VideoShowcase() {
   const metrics = [
     { icon: Clock, label: 'DELIVERED IN', value: '5 DAYS', labelAr: 'تسليم خلال 5 أيام' },
     { icon: Shield, label: 'WARRANTY', value: '2 YEARS', labelAr: 'ضمان سنتين' },
-    { icon: CheckCircle, label: 'STREET-LEGAL', value: 'BEAM', labelAr: 'متوافق مع القانون' },
+    { icon: CheckCircle, label: 'STREET-LEGAL', value: 'CERTIFIED', labelAr: 'مطابق للمواصفات' },
   ];
 
   return (

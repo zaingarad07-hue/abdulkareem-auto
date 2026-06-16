@@ -9,8 +9,8 @@
 كل البيانات في ملف واحد: **`src/config.ts`**
 
 ```ts
-whatsapp: "971500000000",   // ← ضع رقم العميل الحقيقي هنا (بدون + أو مسافات)
-phoneDisplay: "+971 50 000 0000",
+whatsapp: "971507343330",     // ← رقم واتساب العميل (بدون + أو مسافات)
+phoneDisplay: "+971 50 734 3330",
 location: "Dubai, UAE",
 instagram: "abdulkareemauto",
 ```
