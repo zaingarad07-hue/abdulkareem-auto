@@ -1,62 +1,58 @@
+import { Routes, Route, useLocation } from 'react-router';
+import { useEffect } from 'react';
 import Navigation from './components/Navigation';
 import FloatingWhatsApp from './components/FloatingWhatsApp';
-import HeroSection from './sections/HeroSection';
-import CraftSection from './sections/CraftSection';
-import ServicesGrid from './sections/ServicesGrid';
-import BeforeAfterSlider from './sections/BeforeAfterSlider';
-import VideoShowcase from './sections/VideoShowcase';
-import WhyUsSection from './sections/WhyUsSection';
-import ContactWhatsApp from './sections/ContactWhatsApp';
+import CartDrawer from './components/shop/CartDrawer';
+import HomePage from './routes/HomePage';
+import ShopPage from './routes/ShopPage';
+import ProductDetailPage from './routes/ProductDetailPage';
+import CartPage from './routes/CartPage';
+import AdminLayout from './routes/admin/AdminLayout';
+import LoginPage from './routes/admin/LoginPage';
+import DashboardPage from './routes/admin/DashboardPage';
+import ProductsPage from './routes/admin/ProductsPage';
+import OrdersPage from './routes/admin/OrdersPage';
 
-/**
- * App.tsx — Main Application Component
- * Assembles all sections into a cohesive, cinematic single-page experience.
- * 
- * Section Order:
- * 1. HeroSection — Light Ignition (Startup sequence with video background)
- * 2. CraftSection — "We Engineer Presence" (Brand promise)
- * 3. ServicesGrid — Signature Upgrades (3-card interactive grid)
- * 4. BeforeAfterSlider — The Proof (Interactive before/after comparison)
- * 5. VideoShowcase — Portfolio display with uploaded videos
- * 6. WhyUsSection — Trust + Credibility (Process steps)
- * 7. ContactWhatsApp — Contact form + WhatsApp CTA
- * 
- * Persistent Elements:
- * - Navigation (top-right pill, appears on scroll)
- * - FloatingWhatsApp (bottom-right floating button)
- */
+function ScrollToTop() {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+  return null;
+}
+
 export default function App() {
+  const { pathname } = useLocation();
+  const isAdmin = pathname.startsWith('/admin');
+
   return (
     <div className="relative bg-dark-bg min-h-screen noise-overlay">
-      {/* Persistent Navigation */}
-      <Navigation />
+      <ScrollToTop />
 
-      {/* Main Content */}
+      {!isAdmin && <Navigation />}
+
       <main className="relative">
-        {/* Section 1: Hero — Light Ignition */}
-        <HeroSection />
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/shop" element={<ShopPage />} />
+          <Route path="/shop/:slug" element={<ProductDetailPage />} />
+          <Route path="/cart" element={<CartPage />} />
 
-        {/* Section 2: Our Craft */}
-        <CraftSection />
-
-        {/* Section 3: Services Grid */}
-        <ServicesGrid />
-
-        {/* Section 4: Before/After Showcase */}
-        <BeforeAfterSlider />
-
-        {/* Section 5: Video Showcase */}
-        <VideoShowcase />
-
-        {/* Section 6: Why Us */}
-        <WhyUsSection />
-
-        {/* Section 7: Contact + Footer */}
-        <ContactWhatsApp />
+          <Route path="/admin/login" element={<LoginPage />} />
+          <Route path="/admin" element={<AdminLayout />}>
+            <Route index element={<DashboardPage />} />
+            <Route path="products" element={<ProductsPage />} />
+            <Route path="orders" element={<OrdersPage />} />
+          </Route>
+        </Routes>
       </main>
 
-      {/* Persistent Floating WhatsApp Button */}
-      <FloatingWhatsApp />
+      {!isAdmin && (
+        <>
+          <CartDrawer />
+          <FloatingWhatsApp />
+        </>
+      )}
     </div>
   );
 }
