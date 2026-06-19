@@ -25,6 +25,7 @@ export default function ProductForm({ product, categories, onClose }: Props) {
     name_ar: product?.name_ar ?? '',
     description_en: product?.description_en ?? '',
     description_ar: product?.description_ar ?? '',
+    pricing_mode: product?.pricing_mode ?? ('fixed' as 'fixed' | 'quote'),
     price_aed: product?.price_aed?.toString() ?? '',
     stock: product?.stock?.toString() ?? '0',
     category_id: product?.category_id ?? '',
@@ -77,7 +78,8 @@ export default function ProductForm({ product, categories, onClose }: Props) {
       name_ar: form.name_ar,
       description_en: form.description_en || null,
       description_ar: form.description_ar || null,
-      price_aed: Number(form.price_aed) || 0,
+      pricing_mode: form.pricing_mode,
+      price_aed: form.pricing_mode === 'fixed' ? (Number(form.price_aed) || 0) : null,
       stock: Number(form.stock) || 0,
       category_id: form.category_id || null,
       product_type: form.product_type || null,
@@ -158,21 +160,51 @@ export default function ProductForm({ product, categories, onClose }: Props) {
             />
           </div>
 
+          <div>
+            <label className="font-mono-label text-[10px] text-text-secondary mb-2 block">
+              PRICING MODE
+            </label>
+            <div className="grid grid-cols-2 gap-2">
+              <PricingModeButton
+                active={form.pricing_mode === 'fixed'}
+                onClick={() => setForm({ ...form, pricing_mode: 'fixed' })}
+                title="Fixed Price"
+                subtitle="Ready product · سعر ثابت"
+              />
+              <PricingModeButton
+                active={form.pricing_mode === 'quote'}
+                onClick={() => setForm({ ...form, pricing_mode: 'quote' })}
+                title="Quote on Request"
+                subtitle="Service / Install · حسب المعاينة"
+              />
+            </div>
+          </div>
+
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-            <Field
-              label="PRICE (AED)"
-              required
-              type="number"
-              value={form.price_aed}
-              onChange={(v) => setForm({ ...form, price_aed: v })}
-            />
-            <Field
-              label="STOCK"
-              required
-              type="number"
-              value={form.stock}
-              onChange={(v) => setForm({ ...form, stock: v })}
-            />
+            {form.pricing_mode === 'fixed' ? (
+              <>
+                <Field
+                  label="PRICE (AED)"
+                  required
+                  type="number"
+                  value={form.price_aed}
+                  onChange={(v) => setForm({ ...form, price_aed: v })}
+                />
+                <Field
+                  label="STOCK"
+                  required
+                  type="number"
+                  value={form.stock}
+                  onChange={(v) => setForm({ ...form, stock: v })}
+                />
+              </>
+            ) : (
+              <div className="col-span-2 flex items-center px-3 py-2 rounded-lg text-xs text-text-secondary"
+                style={{ background: 'rgba(53, 184, 255, 0.05)', border: '1px solid rgba(53, 184, 255, 0.15)' }}
+              >
+                Price hidden · customers will click "Request Quote" on WhatsApp.
+              </div>
+            )}
             <Select
               label="BRAND"
               value={form.category_id}
@@ -384,6 +416,38 @@ function Select({
         ))}
       </select>
     </div>
+  );
+}
+
+function PricingModeButton({
+  active,
+  onClick,
+  title,
+  subtitle,
+}: {
+  active: boolean;
+  onClick: () => void;
+  title: string;
+  subtitle: string;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className="p-3 rounded-lg text-left transition-all"
+      style={{
+        background: active ? 'rgba(53, 184, 255, 0.12)' : 'rgba(244, 246, 255, 0.03)',
+        border: active ? '1px solid rgba(53, 184, 255, 0.45)' : '1px solid rgba(244, 246, 255, 0.1)',
+      }}
+    >
+      <p
+        className="font-display text-sm font-bold tracking-wider"
+        style={{ color: active ? '#35B8FF' : '#F4F6FF' }}
+      >
+        {title}
+      </p>
+      <p className="text-[11px] text-text-secondary mt-0.5">{subtitle}</p>
+    </button>
   );
 }
 

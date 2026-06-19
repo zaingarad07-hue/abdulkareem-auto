@@ -19,7 +19,8 @@ export type ProductRow = {
   name_ar: string;
   description_en: string | null;
   description_ar: string | null;
-  price_aed: number;
+  pricing_mode: 'fixed' | 'quote';
+  price_aed: number | null;
   stock: number;
   category_id: string | null;
   product_type: string | null;

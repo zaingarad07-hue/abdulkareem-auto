@@ -4,7 +4,7 @@
 
 @layer base {
   :root {
-    /* Dark Luxury Automotive Theme */
+    /* shadcn/ui HSL theme tokens — keep for Radix components */
     --background: 228 43% 3%;
     --foreground: 234 67% 97%;
     --card: 228 30% 6%;
@@ -26,14 +26,52 @@
     --ring: 199 100% 60%;
     --radius: 1.125rem;
 
-    /* Custom Colors */
-    --cyan: #35B8FF;
+    /* ── Semantic surface tokens (ink scale, dark→darkest) ── */
+    --ink-900: #05060B;        /* page background */
+    --ink-800: #0B0E1A;        /* alt sections */
+    --ink-700: #0E1120;        /* raised card base */
+    --ink-600: #14182A;        /* muted fills */
+
+    /* ── Cyan headlight accent ── */
+    --cyan-500: #35B8FF;       /* primary brand accent */
+    --cyan-600: #1A8FCC;       /* gradient deep end / hover */
     --cyan-glow: rgba(53, 184, 255, 0.35);
-    --cyan-glow-intense: rgba(53, 184, 255, 0.6);
-    --dark-bg: #05060B;
-    --dark-bg-secondary: #0B0E1A;
+    --cyan-glow-intense: rgba(53, 184, 255, 0.60);
+
+    /* ── Text ── */
     --text-primary: #F4F6FF;
     --text-secondary: #A7A9B5;
+    --text-tertiary: rgba(167, 169, 181, 0.6);
+
+    /* ── Hairlines & translucent fills ── */
+    --line-soft: rgba(244, 246, 255, 0.10);
+    --line-softer: rgba(244, 246, 255, 0.06);
+    --line-cyan: rgba(53, 184, 255, 0.40);
+    --fill-glass: rgba(5, 6, 11, 0.55);
+    --fill-card: rgba(11, 14, 26, 0.60);
+
+    /* ── Status (order lifecycle) ── */
+    --status-pending: #FB923C;
+    --status-confirmed: #35B8FF;
+    --status-shipped: #60A5FA;
+    --status-completed: #4ADE80;
+    --status-cancelled: #F87171;
+    --whatsapp: #25D366;
+
+    /* ── Signature neon glow shadows ── */
+    --glow-soft: 0 0 20px rgba(53, 184, 255, 0.30), 0 0 40px rgba(53, 184, 255, 0.15);
+    --glow-intense: 0 0 30px rgba(53, 184, 255, 0.50), 0 0 60px rgba(53, 184, 255, 0.25);
+    --glow-whatsapp: 0 0 20px rgba(37, 211, 102, 0.30), 0 0 40px rgba(37, 211, 102, 0.15);
+
+    /* ── Motion ── */
+    --ease-cinematic: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    --dur-fast: 0.3s;
+    --dur-slow: 0.8s;
+
+    /* ── Aliases kept for legacy class names (do not remove) ── */
+    --cyan: var(--cyan-500);
+    --dark-bg: var(--ink-900);
+    --dark-bg-secondary: var(--ink-800);
   }
 
   * {
@@ -280,4 +318,28 @@
 
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(53, 184, 255, 0.5);
+}
+
+/* ════════════════════════════════════════════════════════════
+   Accessibility: respect users who prefer reduced motion.
+   Disables all decorative loops and entrance animations.
+   ════════════════════════════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .animate-whatsapp-pulse,
+  .animate-neon-flicker,
+  .animate-scanline-drift,
+  .animate-shimmer,
+  .animate-float,
+  .animate-glow-pulse {
+    animation: none !important;
+  }
 }

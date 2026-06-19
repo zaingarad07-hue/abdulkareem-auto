@@ -160,20 +160,30 @@ export default function ProductsPage() {
                         {cat?.name_en ?? '—'}
                       </td>
                       <td className="p-4 text-cyan font-display">
-                        {Number(p.price_aed).toLocaleString()}
+                        {p.pricing_mode === 'quote' ? (
+                          <span className="text-xs text-text-secondary font-body italic">
+                            Quote
+                          </span>
+                        ) : (
+                          Number(p.price_aed ?? 0).toLocaleString()
+                        )}
                       </td>
                       <td className="p-4">
-                        <span
-                          className={
-                            p.stock === 0
-                              ? 'text-red-400'
-                              : p.stock <= 3
-                              ? 'text-orange-400'
-                              : 'text-text-primary'
-                          }
-                        >
-                          {p.stock}
-                        </span>
+                        {p.pricing_mode === 'quote' ? (
+                          <span className="text-text-secondary text-xs">—</span>
+                        ) : (
+                          <span
+                            className={
+                              p.stock === 0
+                                ? 'text-red-400'
+                                : p.stock <= 3
+                                ? 'text-orange-400'
+                                : 'text-text-primary'
+                            }
+                          >
+                            {p.stock}
+                          </span>
+                        )}
                       </td>
                       <td className="p-4">
                         <span

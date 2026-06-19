@@ -80,10 +80,21 @@ export default function ShopPage() {
 
     switch (sort) {
       case 'price-asc':
-        list.sort((a, b) => a.price_aed - b.price_aed);
+        // Quote items (null price) sort to the bottom in both directions
+        list.sort((a, b) => {
+          if (a.price_aed == null && b.price_aed == null) return 0;
+          if (a.price_aed == null) return 1;
+          if (b.price_aed == null) return -1;
+          return a.price_aed - b.price_aed;
+        });
         break;
       case 'price-desc':
-        list.sort((a, b) => b.price_aed - a.price_aed);
+        list.sort((a, b) => {
+          if (a.price_aed == null && b.price_aed == null) return 0;
+          if (a.price_aed == null) return 1;
+          if (b.price_aed == null) return -1;
+          return b.price_aed - a.price_aed;
+        });
         break;
     }
 
