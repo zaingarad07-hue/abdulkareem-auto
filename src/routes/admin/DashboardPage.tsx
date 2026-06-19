@@ -28,6 +28,7 @@ export default function DashboardPage() {
           .from('products')
           .select('id', { count: 'exact', head: true })
           .eq('is_active', true)
+          .eq('pricing_mode', 'fixed')
           .eq('stock', 0),
         supabase.from('orders').select('id', { count: 'exact', head: true }).eq('status', 'pending'),
         supabase

@@ -105,11 +105,12 @@ export default function ProductDetailPage() {
     );
   }
 
-  const isOut = product.stock === 0;
+  const isQuote = product.pricing_mode === 'quote';
+  const isOut = !isQuote && product.stock === 0;
   const images = product.images.length > 0 ? product.images : [];
 
   const handleAddToCart = () => {
-    if (isOut) return;
+    if (isOut || isQuote || product.price_aed == null) return;
     addItem(
       {
         product_id: product.id,
@@ -125,13 +126,20 @@ export default function ProductDetailPage() {
   };
 
   const handleOrderViaWhatsApp = () => {
-    const text = encodeURIComponent(
-      `مرحباً عبد الكريم 👋\n\n` +
-      `أود الاستفسار عن المنتج:\n` +
-      `${product.name_ar} (${product.name_en})\n` +
-      `الكمية: ${qty}\n` +
-      `السعر: ${(product.price_aed * qty).toLocaleString()} درهم`
-    );
+    const text = isQuote
+      ? encodeURIComponent(
+          `مرحباً عبد الكريم 👋\n\n` +
+          `أود طلب عرض سعر للخدمة:\n` +
+          `${product.name_ar} (${product.name_en})\n` +
+          `أحتاج معاينة لتحديد التكلفة النهائية.`
+        )
+      : encodeURIComponent(
+          `مرحباً عبد الكريم 👋\n\n` +
+          `أود الاستفسار عن المنتج:\n` +
+          `${product.name_ar} (${product.name_en})\n` +
+          `الكمية: ${qty}\n` +
+          `السعر: ${((product.price_aed ?? 0) * qty).toLocaleString()} درهم`
+        );
     window.open(
       `https://wa.me/${BUSINESS.whatsapp}?text=${text}`,
       '_blank',
@@ -220,12 +228,25 @@ export default function ProductDetailPage() {
             </h1>
             <p className="font-arabic text-lg text-cyan/80 mb-6">{product.name_ar}</p>
 
-            <div className="flex items-baseline gap-4 mb-6">
-              <span className="font-display text-3xl sm:text-4xl font-bold text-cyan">
-                {product.price_aed.toLocaleString()}
-                <span className="text-base text-text-secondary ml-2">AED</span>
-              </span>
-              <StockBadge stock={product.stock} />
+            <div className="flex items-baseline gap-4 mb-6 flex-wrap">
+              {isQuote ? (
+                <div>
+                  <p className="font-display text-2xl sm:text-3xl font-bold text-cyan">
+                    Quoted on inspection
+                  </p>
+                  <p className="font-arabic text-base text-text-secondary mt-1">
+                    حسب المعاينة — السعر يحدّد بعد فحص السيارة
+                  </p>
+                </div>
+              ) : (
+                <>
+                  <span className="font-display text-3xl sm:text-4xl font-bold text-cyan">
+                    {product.price_aed?.toLocaleString() ?? '—'}
+                    <span className="text-base text-text-secondary ml-2">AED</span>
+                  </span>
+                  <StockBadge stock={product.stock} />
+                </>
+              )}
             </div>
 
             {product.compatible_models && (
@@ -261,7 +282,7 @@ export default function ProductDetailPage() {
               </div>
             )}
 
-            {!isOut && (
+            {!isOut && !isQuote && (
               <div className="flex items-center gap-3 mb-6">
                 <span className="font-mono-label text-xs text-text-secondary">QTY</span>
                 <div
@@ -291,14 +312,16 @@ export default function ProductDetailPage() {
             )}
 
             <div className="flex flex-col sm:flex-row gap-3">
-              <button
-                onClick={handleAddToCart}
-                disabled={isOut}
-                className="btn-primary flex-1 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                <ShoppingCart className="w-4 h-4" />
-                Add to Cart
-              </button>
+              {!isQuote && (
+                <button
+                  onClick={handleAddToCart}
+                  disabled={isOut}
+                  className="btn-primary flex-1 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  <ShoppingCart className="w-4 h-4" />
+                  Add to Cart
+                </button>
+              )}
               <button
                 onClick={handleOrderViaWhatsApp}
                 className="flex-1 inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full font-display text-sm tracking-wider uppercase font-bold text-white transition-all"
@@ -308,7 +331,7 @@ export default function ProductDetailPage() {
                 }}
               >
                 <MessageCircle className="w-4 h-4" />
-                Order via WhatsApp
+                {isQuote ? 'Request Quote on WhatsApp' : 'Order via WhatsApp'}
               </button>
             </div>
           </motion.div>
