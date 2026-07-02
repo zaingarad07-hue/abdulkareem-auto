@@ -1,30 +1,20 @@
-import { useRef, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { ChevronDown, Zap, Lightbulb, Palette } from 'lucide-react';
 
 /**
  * HeroSection — The Startup Sequence
- * Features a dark full-screen layout with cinematic video background.
- * On page load, simulates a "car ignition sequence" using Framer Motion.
- * Title reveals with crisp fade-and-slide, followed by a CTA with pulsing laser-glow border.
+ * Full-screen cinematic showroom photograph with a slow Ken Burns zoom.
+ * On page load, plays an "ignition sequence" title reveal with Framer Motion,
+ * followed by a CTA with pulsing laser-glow border.
  */
 export default function HeroSection() {
-  const videoRef = useRef<HTMLVideoElement>(null);
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
     // Trigger entrance animation after a brief delay
     const timer = setTimeout(() => setIsLoaded(true), 300);
     return () => clearTimeout(timer);
-  }, []);
-
-  useEffect(() => {
-    // Auto-play video when loaded
-    if (videoRef.current) {
-      videoRef.current.play().catch(() => {
-        // Autoplay blocked, will show poster frame
-      });
-    }
   }, []);
 
   // Animation variants
@@ -92,20 +82,26 @@ export default function HeroSection() {
       id="hero"
       className="relative w-full min-h-screen overflow-hidden bg-dark-bg"
     >
-      {/* Video Background */}
-      <div className="absolute inset-0 z-0">
-        <video
-          ref={videoRef}
-          className="w-full h-full object-cover"
-          src="/videos/hero-lights-on.mp4"
-          muted
-          loop
-          playsInline
-          preload="auto"
-          poster="/images/hero.jpg"
+      {/* Showroom Background — slow Ken Burns zoom for a cinematic feel */}
+      <div className="absolute inset-0 z-0 overflow-hidden">
+        <motion.img
+          src="/images/hero.jpg"
+          alt="Abdulkareem Auto showroom"
+          className="w-full h-full object-cover object-center"
+          initial={{ scale: 1 }}
+          animate={{ scale: 1.08 }}
+          transition={{ duration: 25, ease: 'linear', repeat: Infinity, repeatType: 'mirror' }}
         />
         {/* Dark overlay for text readability */}
-        <div className="absolute inset-0 bg-black/50" />
+        <div className="absolute inset-0 bg-black/45" />
+        {/* Side vignette so the headline pops against the bright showroom */}
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              'linear-gradient(90deg, rgba(5,6,11,0.75) 0%, rgba(5,6,11,0.35) 45%, transparent 75%)',
+          }}
+        />
         {/* Bottom gradient fade */}
         <div className="absolute bottom-0 left-0 right-0 h-[40%] gradient-bottom" />
       </div>
