@@ -103,7 +103,7 @@ export default function BeforeAfterSlider() {
           {/* Main container */}
           <div
             ref={containerRef}
-            className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden cursor-pointer shadow-card neon-border"
+            className="relative w-full aspect-[16/9] sm:aspect-[20/9] rounded-2xl overflow-hidden cursor-pointer shadow-card neon-border"
             onClick={handleContainerClick}
             style={{ touchAction: 'none' }}
           >
@@ -112,7 +112,7 @@ export default function BeforeAfterSlider() {
               {/* Using the "After" portion of the uploaded image (top half) */}
               <img
                 src="/images/after.jpg"
-                alt="After - Custom LED tail lights"
+                alt="After - Custom LED DRL headlights switched on"
                 className="w-full h-full object-cover object-center"
                 draggable={false}
               />
@@ -134,13 +134,13 @@ export default function BeforeAfterSlider() {
               {/* Before image pinned to the FULL container width so it never squishes */}
               <img
                 src="/images/before.jpg"
-                alt="Before - Stock tail lights"
+                alt="Before - Headlights off, stock look"
                 className="absolute top-0 left-0 h-full object-cover object-center"
                 draggable={false}
                 style={{
                   width: containerWidth ? `${containerWidth}px` : '100%',
                   maxWidth: 'none',
-                  filter: 'brightness(0.7) saturate(0.75)',
+                  filter: 'brightness(0.85) saturate(0.85)',
                 }}
               />
               {/* Before Label */}
@@ -197,7 +197,7 @@ export default function BeforeAfterSlider() {
             transition={{ delay: 0.5 }}
             className="text-center text-text-secondary text-sm mt-6 font-arabic"
           >
-            استون مارتن فانكويش — ترقية كاملة لإضاءة الخلفية بشريط LED أحمر مخصص
+            مرسيدس S-Class — ترقية عدسات LED مع DRL مخصص يشتغل كخط ضوئي متصل
           </motion.p>
         </motion.div>
       </div>
